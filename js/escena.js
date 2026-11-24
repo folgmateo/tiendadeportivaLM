@@ -1,282 +1,152 @@
-/* TiendaDeportivaLM — escena 3D procedural del hero (Three.js).
+/* TiendaDeportivaLM — escaparate 3D: el balón gira 360° con el scroll.
    Script clásico con import dinámico: funciona en GitHub Pages y abriendo el archivo con doble clic. */
 (async () => {
 const THREE = await import("https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js");
 const { RoomEnvironment } = await import("https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/environments/RoomEnvironment.js");
 
 const canvas = document.getElementById("escena");
-const st = window.TDLM || { heroProgress: 0, reduced: false, mouseX: 0, mouseY: 0 };
-const isSmall = () => window.innerWidth < 860;
+if (!canvas) return;
+const st = window.TDLM || { spot: 0, reduced: false };
+const isSmall = () => window.innerWidth < 760;
 const lowPower = window.matchMedia("(pointer: coarse)").matches || (navigator.hardwareConcurrency || 8) <= 4;
 
 let renderer;
 try {
-  renderer = new THREE.WebGLRenderer({ canvas, antialias: !lowPower, alpha: true, powerPreference: "high-performance" });
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
 } catch (e) {
   canvas.remove();
   return;
 }
-renderer.setPixelRatio(Math.min(devicePixelRatio, lowPower ? 1.25 : 1.75));
+renderer.setPixelRatio(Math.min(devicePixelRatio, lowPower ? 1.5 : 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-camera.position.set(0, 0, 10.5);
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
+camera.position.set(0, 0.35, 7.2);
+camera.lookAt(0, 0, 0);
 const pmrem = new THREE.PMREMGenerator(renderer);
-scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.03).texture;
 pmrem.dispose();
-scene.add(new THREE.AmbientLight(0xffffff, 0.25));
-const key = new THREE.DirectionalLight(0xffffff, 2.4);
-key.position.set(-4, 6, 6);
+const key = new THREE.DirectionalLight(0xffffff, 2.2);
+key.position.set(-3, 5, 4);
 scene.add(key);
-const rim = new THREE.PointLight(0xff6a1a, 25, 20);
-rim.position.set(4, -1, -3);
-scene.add(rim);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xd9d9d9, 0.6));
 
-const rnd = (a = 1) => (Math.random() - 0.5) * 2 * a;
-const lerp = THREE.MathUtils.lerp;
-const clamp01 = (x) => THREE.MathUtils.clamp(x, 0, 1);
-const smooth = (a, b, x) => THREE.MathUtils.smoothstep(x, a, b);
-const TAU = Math.PI * 2;
+/* ---------- textura del balón: paneles por cercanía (12 pentágonos, 20 hexágonos) ---------- */
+function centros() {
+  const ico = new THREE.IcosahedronGeometry(1, 0);
+  const p = ico.attributes.position;
+  const verts = [], caras = [];
+  for (let i = 0; i < p.count; i++) {
+    const v = new THREE.Vector3().fromBufferAttribute(p, i).normalize();
+    if (!verts.some((u) => u.distanceTo(v) < 1e-3)) verts.push(v);
+  }
+  for (let i = 0; i < p.count; i += 3) {
+    const c = new THREE.Vector3();
+    for (let k = 0; k < 3; k++) c.add(new THREE.Vector3().fromBufferAttribute(p, i + k));
+    caras.push(c.normalize());
+  }
+  return { verts, caras };
+}
 
-/* ---------- balón de fútbol: paneles que pueden separarse ---------- */
-const ballGeo = new THREE.IcosahedronGeometry(1, 2); // ya es no indexada: cada cara es un panel independiente
-const pos = ballGeo.attributes.position;
-const faceCount = pos.count / 3;
-const orig = Float32Array.from(pos.array);
-const faceDir = new Float32Array(faceCount * 3);
-const faceKick = new Float32Array(faceCount);
-const colors = new Float32Array(pos.count * 3);
-// los 12 vértices del icosaedro marcan los pentágonos negros del balón clásico
-const ico = new THREE.IcosahedronGeometry(1, 0);
-const poles = [];
-for (let i = 0; i < ico.attributes.position.count; i++) {
-  const v = new THREE.Vector3().fromBufferAttribute(ico.attributes.position, i).normalize();
-  if (!poles.some((p) => p.distanceTo(v) < 1e-3)) poles.push(v);
-}
-// centros de las 20 caras del icosaedro = centros de los hexágonos blancos
-const hexCenters = [];
-for (let i = 0; i < ico.attributes.position.count; i += 3) {
-  const h = new THREE.Vector3();
-  for (let k = 0; k < 3; k++) h.add(new THREE.Vector3().fromBufferAttribute(ico.attributes.position, i + k));
-  hexCenters.push(h.normalize());
-}
-const c = new THREE.Vector3();
-const black = new THREE.Color(0x111418), white = new THREE.Color(0xf5f5f0);
-for (let f = 0; f < faceCount; f++) {
-  c.set(0, 0, 0);
-  for (let k = 0; k < 3; k++) c.add(new THREE.Vector3().fromBufferAttribute(pos, f * 3 + k));
-  c.normalize();
-  faceDir.set([c.x, c.y, c.z], f * 3);
-  faceKick[f] = 0.6 + Math.random() * 1.4;
-  // pentágono negro si el centro de la cara está más cerca de un vértice del icosaedro que de un centro de cara
-  const dPole = Math.max(...poles.map((p) => p.dot(c)));
-  const dHex = Math.max(...hexCenters.map((h) => h.dot(c)));
-  const isBlack = dPole * 1.012 > dHex;
-  const col = isBlack ? black : white;
-  for (let k = 0; k < 3; k++) colors.set([col.r, col.g, col.b], (f * 3 + k) * 3);
-}
-ballGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-// normales esféricas para que el balón se vea liso
-const normals = new Float32Array(pos.count * 3);
-for (let i = 0; i < pos.count; i++) {
-  const v = new THREE.Vector3().fromBufferAttribute(pos, i).normalize();
-  normals.set([v.x, v.y, v.z], i * 3);
-}
-ballGeo.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
-const ball = new THREE.Mesh(ballGeo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.45, metalness: 0.05, side: THREE.DoubleSide }));
-scene.add(ball);
-
-function explodeBall(e) {
-  const a = pos.array;
-  for (let f = 0; f < faceCount; f++) {
-    const d = e * faceKick[f] * 1.1;
-    const dx = faceDir[f * 3] * d, dy = faceDir[f * 3 + 1] * d, dz = faceDir[f * 3 + 2] * d;
-    for (let k = 0; k < 3; k++) {
-      const i = (f * 3 + k) * 3;
-      a[i] = orig[i] + dx; a[i + 1] = orig[i + 1] + dy; a[i + 2] = orig[i + 2] + dz;
+function texturasBalon() {
+  const W = lowPower ? 1024 : 2048, H = W / 2;
+  const color = document.createElement("canvas");
+  const relieve = document.createElement("canvas");
+  color.width = relieve.width = W;
+  color.height = relieve.height = H;
+  const gc = color.getContext("2d"), gr = relieve.getContext("2d");
+  const ic = gc.createImageData(W, H), ir = gr.createImageData(W, H);
+  const { verts, caras } = centros();
+  // los pentágonos de un balón real son algo menores que la celda de Voronoi pura
+  const pts = verts.map((v) => ({ v, negro: true, peso: 0.985 })).concat(caras.map((v) => ({ v, negro: false, peso: 1 })));
+  for (let py = 0; py < H; py++) {
+    const th = (py + 0.5) / H * Math.PI, sth = Math.sin(th), cth = Math.cos(th);
+    for (let px = 0; px < W; px++) {
+      const ph = (px + 0.5) / W * Math.PI * 2;
+      const x = -Math.cos(ph) * sth, y = cth, z = Math.sin(ph) * sth;
+      let b1 = -2, b2 = -2, negro = false;
+      for (const q of pts) {
+        const d = (q.v.x * x + q.v.y * y + q.v.z * z) * q.peso;
+        if (d > b1) { b2 = b1; b1 = d; negro = q.negro; } else if (d > b2) b2 = d;
+      }
+      const costura = Math.min(1, (b1 - b2) / 0.012); // 0 en la costura, 1 dentro del panel
+      const base = negro ? 26 : 242;
+      const borde = 0.55 + 0.45 * costura;
+      const g = Math.round(base * borde + (negro ? 0 : (1 - borde) * 40));
+      const i = (py * W + px) * 4;
+      ic.data[i] = ic.data[i + 1] = ic.data[i + 2] = g;
+      ic.data[i + 3] = 255;
+      const r = Math.round(255 * Math.pow(costura, 0.6)); // la costura queda hundida
+      ir.data[i] = ir.data[i + 1] = ir.data[i + 2] = r;
+      ir.data[i + 3] = 255;
     }
   }
-  pos.needsUpdate = true;
+  gc.putImageData(ic, 0, 0);
+  gr.putImageData(ir, 0, 0);
+  const map = new THREE.CanvasTexture(color);
+  map.colorSpace = THREE.SRGBColorSpace;
+  map.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  const bump = new THREE.CanvasTexture(relieve);
+  return { map, bump };
 }
 
-/* ---------- balón de baloncesto ---------- */
-function basketTexture() {
-  const cv = document.createElement("canvas");
-  cv.width = 1024; cv.height = 512;
-  const g = cv.getContext("2d");
-  g.fillStyle = "#E8661C"; g.fillRect(0, 0, 1024, 512);
-  // granulado
-  for (let i = 0; i < 9000; i++) { g.fillStyle = `rgba(0,0,0,${Math.random() * 0.12})`; g.fillRect(Math.random() * 1024, Math.random() * 512, 2, 2); }
-  g.strokeStyle = "#1a1a1a"; g.lineWidth = 9;
-  [0, 256, 512, 768].forEach((x) => { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 512); g.stroke(); });
-  g.beginPath(); g.moveTo(0, 256); g.lineTo(1024, 256); g.stroke();
-  [128, 640].forEach((x0) => {
-    g.beginPath();
-    for (let y = 0; y <= 512; y += 4) { const x = x0 + Math.sin((y / 512) * Math.PI) * 110; y ? g.lineTo(x, y) : g.moveTo(x, y); }
-    g.stroke();
-  });
-  const t = new THREE.CanvasTexture(cv);
-  t.colorSpace = THREE.SRGBColorSpace;
-  t.anisotropy = 4;
-  return t;
-}
-const basket = new THREE.Mesh(new THREE.SphereGeometry(0.75, 48, 32), new THREE.MeshStandardMaterial({ map: basketTexture(), roughness: 0.7 }));
-scene.add(basket);
+const { map, bump } = texturasBalon();
+const ball = new THREE.Mesh(
+  new THREE.SphereGeometry(1, 96, 64),
+  new THREE.MeshPhysicalMaterial({ map, bumpMap: bump, bumpScale: 2.2, roughness: 0.42, clearcoat: 0.35, clearcoatRoughness: 0.45 })
+);
+scene.add(ball);
 
-/* ---------- mancuerna ---------- */
-const dumbbell = new THREE.Group();
-{
-  const rubber = new THREE.MeshStandardMaterial({ color: 0x15191d, roughness: 0.6 });
-  const chrome = new THREE.MeshStandardMaterial({ color: 0xdddddd, metalness: 1, roughness: 0.15 });
-  const accent = new THREE.MeshStandardMaterial({ color: 0xff6a1a, roughness: 0.4 });
-  const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 1.2, 24), chrome);
-  handle.rotation.z = Math.PI / 2;
-  dumbbell.add(handle);
-  [-1, 1].forEach((s) => {
-    const head = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.42, 6), rubber);
-    head.rotation.z = Math.PI / 2;
-    head.position.x = s * 0.78;
-    dumbbell.add(head);
-    const band = new THREE.Mesh(new THREE.CylinderGeometry(0.39, 0.39, 0.06, 6), accent);
-    band.rotation.z = Math.PI / 2;
-    band.position.x = s * 0.6;
-    dumbbell.add(band);
-  });
+/* ---------- sombra de contacto ---------- */
+function sombra() {
+  const c = document.createElement("canvas");
+  c.width = c.height = 256;
+  const g = c.getContext("2d");
+  const grad = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  grad.addColorStop(0, "rgba(0,0,0,.42)");
+  grad.addColorStop(0.45, "rgba(0,0,0,.16)");
+  grad.addColorStop(1, "rgba(0,0,0,0)");
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 256, 256);
+  return new THREE.CanvasTexture(c);
 }
-scene.add(dumbbell);
-
-/* ---------- confeti ---------- */
-const confN = lowPower ? 220 : 600;
-const confDir = new Float32Array(confN * 3);
-const confPos = new Float32Array(confN * 3);
-const confCol = new Float32Array(confN * 3);
-const palette = [new THREE.Color(0xff6a1a), new THREE.Color(0xf5f5f0), new THREE.Color(0x2fbf71)];
-for (let i = 0; i < confN; i++) {
-  const u = Math.random() * 2 - 1, a = Math.random() * TAU, sp = 2 + Math.random() * 6, r = Math.sqrt(1 - u * u);
-  confDir.set([r * Math.cos(a) * sp, u * sp * 0.8, r * Math.sin(a) * sp], i * 3);
-  const col = palette[i % 3];
-  confCol.set([col.r, col.g, col.b], i * 3);
-}
-const confGeo = new THREE.BufferGeometry();
-confGeo.setAttribute("position", new THREE.BufferAttribute(confPos, 3));
-confGeo.setAttribute("color", new THREE.BufferAttribute(confCol, 3));
-const confetti = new THREE.Points(confGeo, new THREE.PointsMaterial({ size: 0.09, vertexColors: true, transparent: true, opacity: 0, depthWrite: false }));
-scene.add(confetti);
-
-/* ---------- partículas de ambiente y círculo central de cancha ---------- */
-const dustN = lowPower ? 120 : 320;
-const dustPos = new Float32Array(dustN * 3);
-for (let i = 0; i < dustN; i++) {
-  const a = Math.random() * TAU, r = 2.5 + Math.random() * 9;
-  dustPos.set([Math.sin(a) * r, rnd(5), Math.cos(a) * r], i * 3);
-}
-const dustGeo = new THREE.BufferGeometry();
-dustGeo.setAttribute("position", new THREE.BufferAttribute(dustPos, 3));
-const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({ color: 0xf5f5f0, size: 0.03, transparent: true, opacity: 0.5, depthWrite: false }));
-scene.add(dust);
-
-const lineMat = () => new THREE.MeshBasicMaterial({ color: 0xf5f5f0, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false });
-const court = new THREE.Mesh(new THREE.RingGeometry(3.4, 3.46, 160), lineMat());
-court.rotation.x = -Math.PI / 2;
-court.position.y = -1.9;
-scene.add(court);
-const shock = new THREE.Mesh(new THREE.RingGeometry(1.0, 1.06, 160), new THREE.MeshBasicMaterial({ color: 0xff6a1a, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false }));
-shock.rotation.x = -Math.PI / 2;
-scene.add(shock);
+const shadow = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 3.2), new THREE.MeshBasicMaterial({ map: sombra(), transparent: true, depthWrite: false }));
+shadow.rotation.x = -Math.PI / 2;
+shadow.position.y = -1.02;
+scene.add(shadow);
 
 /* ---------- composición ---------- */
-const layout = { x: 2.4, y: 0, s: 1 };
+const layout = { x: 0, y: 0, s: 1 };
 function resize() {
   const w = canvas.clientWidth, h = canvas.clientHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
-  if (isSmall()) Object.assign(layout, { x: 0.55, y: 1.6, s: 0.62 });
-  else Object.assign(layout, { x: 2.5 * Math.min(1, camera.aspect / 1.6), y: 0, s: 1 });
+  if (isSmall()) Object.assign(layout, { x: 0, y: 0.1, s: 0.9 });
+  else Object.assign(layout, { x: 1.15 * Math.min(1.4, camera.aspect / 1.4), y: 0.05, s: 1 });
   if (!running) render();
 }
 
-/* ---------- animación ---------- */
-const clock = new THREE.Clock();
-const v = new THREE.Vector3();
-let sp = 0, mx = 0, my = 0;
-const BASKET_A = TAU / 3, DUMB_A = (TAU / 3) * 2;
-
+let sp = 0;
+const t0 = performance.now();
 function render() {
-  const t = st.reduced ? 2 : clock.getElapsedTime();
-  const ease = 1 - Math.pow(1 - Math.min(1, t / 1.8), 4);
-  sp += (st.heroProgress - sp) * 0.08;
-  mx += (st.mouseX - mx) * 0.05;
-  my += (st.mouseY - my) * 0.05;
-  const p = st.reduced ? 0 : sp;
-  const s = layout.s;
-
-  const k = smooth(0, 0.12, p);                                   // del hero al centro
-  const orbit = clamp01((p - 0.06) / 0.88);
-  const theta = (1 - Math.pow(1 - orbit, 2)) * TAU;                // vuelta de 360°
-  const e = Math.pow(Math.sin(Math.PI * clamp01((p - 0.12) / 0.7)), 0.8); // explosión
-  const burst = clamp01((p - 0.12) / 0.45);
-  const travel = 1 - Math.pow(1 - burst, 3);
-  const so = isSmall() ? 0.75 : 1;
-  const bounce = st.reduced ? 0 : Math.abs(Math.sin(t * 2.2)) * 0.25 * (1 - k);
-
-  // balón de fútbol
-  explodeBall(e);
-  ball.position.set(lerp(layout.x + (1 - ease) * 3, 0, k), lerp(layout.y, 0, k) + bounce, 0);
-  ball.rotation.set(t * 0.4 + my * 0.2, t * 0.6 + e * 2, 0.2);
-  ball.scale.setScalar(lerp(s * 1.25, so * 1.15, k) * (0.2 + 0.8 * ease));
-
-  // balón de baloncesto y mancuerna: salen disparados en la explosión
-  const r = (2.5 + e * 2.6) * so;
-  basket.position.set(
-    lerp(layout.x - 1.9 * s, Math.sin(BASKET_A) * r, k),
-    lerp(layout.y + 1.5 * s, 0.6 + e * 1.3, k) + Math.sin(t * 1.3) * 0.12,
-    lerp(-0.5, Math.cos(BASKET_A) * r, k)
-  );
-  basket.rotation.set(t * 0.8 + e * 4, t * 0.5, 0.3);
-  basket.scale.setScalar(lerp(s, so, k) * ease);
-
-  dumbbell.position.set(
-    lerp(layout.x + 0.4 * s, Math.sin(DUMB_A) * r, k),
-    lerp(layout.y - 1.75 * s, -0.7 - e * 1.1, k) + Math.cos(t * 1.1) * 0.1,
-    lerp(1.4, Math.cos(DUMB_A) * r, k)
-  );
-  dumbbell.rotation.set(0.3 + my * 0.2 + e * 3, -0.5 + mx * 0.3 + t * 0.3 + e * 4, 0.25 + e * 2);
-  dumbbell.scale.setScalar(lerp(s * 0.9, so * 1.1, k) * ease);
-
-  // confeti
-  const cp = confGeo.attributes.position.array;
-  for (let i = 0; i < confN * 3; i += 3) {
-    cp[i] = confDir[i] * travel;
-    cp[i + 1] = confDir[i + 1] * travel - travel * travel * 1.5;
-    cp[i + 2] = confDir[i + 2] * travel;
-  }
-  confGeo.attributes.position.needsUpdate = true;
-  confetti.material.opacity = burst > 0 && burst < 1 ? Math.sin(Math.PI * burst) : 0;
-
-  shock.scale.setScalar(0.5 + travel * 5);
-  shock.material.opacity = burst > 0 && burst < 1 ? (1 - burst) * 0.9 : 0;
-  court.material.opacity = 0.35 * k;
-  dust.rotation.y = t * 0.02 + theta * 0.3;
-  rim.intensity = 25 + e * 120;
-
-  // cámara: frente al hero → vuelta de 360°
-  const radius = lerp(10.5, 9.6 - e * 1.4, k) * (isSmall() ? 1.45 : 1);
-  const shake = st.reduced ? 0 : e * 0.06;
-  v.set(
-    Math.sin(theta) * radius + mx * 0.3 * (1 - k * 0.5) + Math.sin(t * 40) * shake,
-    Math.sin(theta) * 1.4 * k + e * 1.2 - my * 0.25 + Math.cos(t * 37) * shake,
-    Math.cos(theta) * radius
-  );
-  camera.position.copy(v);
-  camera.lookAt(0, 0, 0);
-
+  const t = (performance.now() - t0) / 1000;
+  sp += ((st.spot || 0) - sp) * 0.12;
+  const giro = st.reduced ? 0.6 : sp * Math.PI * 2 + t * 0.08;
+  const bote = st.reduced ? 0 : Math.sin(sp * Math.PI) * 0.18; // sube un poco a mitad de la vuelta
+  ball.position.set(layout.x, layout.y + bote, 0);
+  ball.scale.setScalar(layout.s);
+  ball.rotation.set(0.35 + Math.sin(sp * Math.PI) * 0.25, giro, 0.12);
+  shadow.position.set(layout.x, layout.y - 1.02 * layout.s, 0);
+  shadow.scale.setScalar((1 - bote * 0.9) * layout.s);
+  shadow.material.opacity = 1 - bote * 1.6;
   renderer.render(scene, camera);
 }
 
-let running = false, visible = true, raf = 0;
+let running = false, visible = false, raf = 0;
 const loop = () => { raf = requestAnimationFrame(loop); render(); };
 function update() {
   const go = visible && !document.hidden && !st.reduced;
@@ -287,6 +157,6 @@ new IntersectionObserver((en) => { visible = en[0].isIntersecting; update(); }).
 document.addEventListener("visibilitychange", update);
 window.addEventListener("resize", resize);
 resize();
-if (st.reduced) render();
+render();
 update();
 })().catch(() => { const c = document.getElementById("escena"); if (c) c.remove(); });

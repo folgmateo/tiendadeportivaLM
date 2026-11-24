@@ -4,13 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TiendaDeportivaLM · Equipo deportivo en Guatemala</title>
-  <meta name="description" content="Zapatillas, balones, ropa y equipo de gimnasio. Pide por WhatsApp y recibe en toda Guatemala.">
-  <meta name="theme-color" content="#0F3B2E">
+  <meta name="description" content="Zapatillas, balones, ropa y equipo de gimnasio a precios accesibles. Pide por WhatsApp y te asesoramos.">
+  <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Big+Shoulders+Display:wght@600;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.css">
+  <link rel="stylesheet" href="css/fuente.css">
   <link rel="stylesheet" href="css/tienda.css">
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
@@ -19,123 +17,232 @@
 <body>
   <a class="skip" href="#productos">Saltar a los productos</a>
 
-  <header class="nav" id="nav">
-    <a class="nav__brand" href="#inicio" aria-label="TiendaDeportivaLM, inicio">
-      <img src="assets/logo.svg" alt="" width="40" height="40">
-      <span>TiendaDeportiva<b>LM</b></span>
+  <div class="utility">
+    <p>Pedidos y asesoría por WhatsApp</p>
+    <a href="https://wa.me/50254870255" target="_blank" rel="noopener">+502 5487 0255</a>
+  </div>
+
+  <header class="header" id="header">
+    <a class="brand" href="#inicio" aria-label="TiendaDeportivaLM, inicio">
+      <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 32 C6 17 17 7 34 7" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/><path d="M15 33 C15 22 23 15 34 15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".45"/></svg>
+      <span class="brand__word">TiendaDeportiva<b>LM</b></span>
     </a>
-    <nav class="nav__links" aria-label="Principal">
-      <a href="#productos">Productos</a>
-      <a href="#envios">Envíos</a>
-      <a href="#contacto">Contacto</a>
+    <nav class="header__nav" aria-label="Categorías">
+      <a href="#productos" data-cat="Running">Running</a>
+      <a href="#productos" data-cat="Fútbol">Fútbol</a>
+      <a href="#productos" data-cat="Baloncesto">Baloncesto</a>
+      <a href="#productos" data-cat="Gimnasio">Gimnasio</a>
+      <a href="#productos" data-cat="Accesorios">Accesorios</a>
     </nav>
-    <button class="cart-btn" id="cart-open" aria-haspopup="dialog" aria-controls="cart">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20.5" r="1.3"/><circle cx="17" cy="20.5" r="1.3"/></svg>
-      <span>Carrito</span>
-      <span class="cart-btn__count" id="cart-count" aria-label="productos en el carrito">0</span>
-    </button>
+    <div class="header__tools">
+      <button class="icon-btn" type="button" id="search-open" aria-label="Buscar productos">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>
+      </button>
+      <button class="icon-btn bag" type="button" id="cart-open" aria-haspopup="dialog" aria-controls="cart">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+        <span class="bag__count" id="cart-count">0</span>
+        <span class="sr-only">Abrir carrito, <span id="cart-count-sr">0</span> productos</span>
+      </button>
+    </div>
   </header>
 
-  <main>
-    <!-- HERO 3D: balón que explota en paneles con un giro de 360° (js/escena.js) -->
-    <section class="hero" id="inicio">
-      <canvas class="hero__canvas" id="escena" aria-hidden="true"></canvas>
-      <div class="hero__content">
-        <p class="hero__tag">Nuevo en Guatemala</p>
-        <h1 class="hero__title"><span class="line">Equípate</span><span class="line">para ganar</span></h1>
-        <p class="hero__lede">Zapatillas, balones, ropa y equipo de gimnasio con precios en quetzales. Pides por WhatsApp y te lo llevamos.</p>
-        <div class="hero__cta">
-          <a href="#productos" class="btn btn--orange magnetic">Ver productos</a>
-          <a href="https://wa.me/50254870255" class="btn btn--ghost magnetic" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+  <main id="inicio">
+    <!-- HERO: foto de campaña (generada con IA; reemplázala por una foto real en assets/img/banner.webp) -->
+    <section class="hero" aria-labelledby="hero-t">
+      <img class="hero__img" src="assets/img/hero-calle.webp" alt="Corredor con ropa urbana corriendo de noche por una calle mojada" width="2000" height="1125" fetchpriority="high">
+      <div class="hero__copy">
+        <h1 id="hero-t" class="hero__title">Corre la<br>ciudad</h1>
+        <p class="hero__text">Running con estilo de calle. Zapatillas, ropa y equipo a precios accesibles, con asesoría real por WhatsApp.</p>
+        <div class="hero__actions">
+          <a class="btn btn--light" href="#productos">Comprar ahora</a>
+          <a class="btn btn--outline-light" href="https://wa.me/50254870255?text=Hola%2C%20quiero%20asesor%C3%ADa%20para%20una%20compra" target="_blank" rel="noopener">Pedir asesoría</a>
         </div>
       </div>
-      <div class="hero__hint" aria-hidden="true">Desliza para ver la jugada</div>
     </section>
 
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker__track">
-        <span>Running</span><span>Fútbol</span><span>Baloncesto</span><span>Gimnasio</span><span>Accesorios</span>
-        <span>Running</span><span>Fútbol</span><span>Baloncesto</span><span>Gimnasio</span><span>Accesorios</span>
+    <section class="sports" aria-labelledby="sports-t">
+      <div class="section-head">
+        <h2 id="sports-t">Compra por deporte</h2>
       </div>
-    </div>
+      <div class="sports__rail" id="sports-rail"></div>
+    </section>
 
-    <!-- PRODUCTOS -->
-    <section class="section products" id="productos" aria-labelledby="productos-t">
-      <div class="products__head">
-        <h2 id="productos-t" class="reveal-title">Productos</h2>
-        <label class="search">
-          <span class="sr-only">Buscar productos</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input type="search" id="buscar" placeholder="Buscar: balón, zapatillas…" autocomplete="off">
-        </label>
+    <!-- SHOWROOM 3D: zapatilla real en 3D (modelo CC BY 4.0, ver assets/3d/CREDITOS.txt) -->
+    <section class="showroom" id="showroom" aria-labelledby="show-t">
+      <div class="showroom__copy">
+        <h2 id="show-t" class="showroom__name">Street Runner</h2>
+        <p class="showroom__desc">Zapatillas urbanas para correr en la ciudad y usarlas todo el día.</p>
+        <p class="showroom__price" id="show-price">Q.499</p>
+        <fieldset class="swatches">
+          <legend>Color: <span id="show-color">Negro</span></legend>
+          <label class="swatch"><input type="radio" name="color" value="Negro" data-variant="street" checked><span style="--c:#222224" aria-hidden="true"></span><b class="sr-only">Negro</b></label>
+          <label class="swatch"><input type="radio" name="color" value="Azul" data-variant="midnight"><span style="--c:#2a90c8" aria-hidden="true"></span><b class="sr-only">Azul</b></label>
+          <label class="swatch"><input type="radio" name="color" value="Rosa" data-variant="beach"><span style="--c:#dcb3b8" aria-hidden="true"></span><b class="sr-only">Rosa</b></label>
+        </fieldset>
+        <button class="btn btn--light" type="button" id="show-add">Agregar al carrito</button>
+      </div>
+      <div class="showroom__stage">
+        <canvas id="zapatilla" aria-label="Zapatilla Street Runner en 3D. Arrástrala para girarla." role="img"></canvas>
+        <p class="showroom__loading" id="show-loading">Cargando 3D…</p>
+        <p class="showroom__hint" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4"/></svg>
+          Arrastra para girarla 360°
+        </p>
+      </div>
+    </section>
+
+    <section class="catalog" id="productos" aria-labelledby="catalog-t">
+      <div class="catalog__head">
+        <h2 id="catalog-t"><span id="catalog-title">Todos los productos</span> <span class="catalog__count" id="catalog-count"></span></h2>
+        <div class="toolbar">
+          <label class="search" id="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>
+            <span class="sr-only">Buscar productos</span>
+            <input type="search" id="buscar" placeholder="Buscar" autocomplete="off">
+          </label>
+          <label class="sort">
+            <span class="sr-only">Ordenar</span>
+            <select id="orden">
+              <option value="rec">Recomendados</option>
+              <option value="asc">Precio: menor a mayor</option>
+              <option value="desc">Precio: mayor a menor</option>
+            </select>
+          </label>
+        </div>
       </div>
       <div class="filters" role="group" aria-label="Filtrar por categoría" id="filtros"></div>
-      <p class="products__empty" id="vacio" hidden>No hay productos que coincidan. Prueba con otra palabra o categoría.</p>
+      <p class="empty" id="vacio" hidden>No encontramos productos con esa búsqueda. Prueba con otra palabra o elige «Todos».</p>
       <div class="grid" id="grid" aria-live="polite"></div>
     </section>
 
-    <!-- BANNER (foto generada con IA: reemplázala en assets/img/banner.webp) -->
-    <section class="banner" id="envios" aria-labelledby="envios-t">
-      <div class="banner__img"><img src="assets/img/banner.webp" alt="Corredor entrenando en una pista al amanecer" loading="lazy" width="1600" height="900"></div>
-      <div class="banner__content">
-        <h2 id="envios-t" class="reveal-title">Envíos a toda Guatemala</h2>
-        <p class="reveal">En la capital entregamos en 24 horas. En los departamentos, de 2 a 4 días hábiles. Pagas contra entrega o por transferencia.</p>
+    <!-- BANDA EDITORIAL (foto generada con IA: reemplázala en assets/img/editorial-crew.webp) -->
+    <section class="editorial" aria-labelledby="edit-t">
+      <img class="editorial__img" src="assets/img/editorial-crew.webp" alt="Grupo de corredores con ropa urbana subiendo unas escaleras de la ciudad al amanecer" loading="lazy" width="2000" height="1125">
+      <div class="editorial__copy">
+        <h2 id="edit-t">La ciudad es tu pista</h2>
+        <p>Equipo para correr de madrugada, entrenar después del trabajo o jugar el fin de semana.</p>
+        <a class="btn btn--light" href="#productos" data-cat="Running">Ver running</a>
       </div>
     </section>
 
-    <section class="section perks" aria-label="Ventajas de comprar con nosotros">
-      <article class="perk reveal">
-        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 14h24v18H6zM30 20h7l5 6v6H30z"/><circle cx="13" cy="36" r="4"/><circle cx="36" cy="36" r="4"/></svg>
-        <h3>Entrega rápida</h3><p>24 horas en la Ciudad de Guatemala.</p>
-      </article>
-      <article class="perk reveal">
-        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 24a16 16 0 1 0 5-11.6"/><path d="M8 8v8h8"/></svg>
-        <h3>Cambios fáciles</h3><p>Si la talla no te queda, la cambias en 15 días.</p>
-      </article>
-      <article class="perk reveal">
-        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 8h28a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H22l-10 8v-8h-2a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4z"/></svg>
-        <h3>Atención por WhatsApp</h3><p>Te asesoramos con tallas y modelos.</p>
-      </article>
+    <!-- Escaparate 3D: el balón gira 360° al hacer scroll (js/escena.js) -->
+    <section class="spotlight" id="destacado" aria-labelledby="spot-t">
+      <div class="spotlight__stage">
+        <canvas id="escena" aria-hidden="true"></canvas>
+        <div class="spotlight__copy">
+          <h2 id="spot-t" class="spotlight__name">Balón de fútbol Clásico N.º 5</h2>
+          <p class="spotlight__desc" id="spot-desc">Costura reforzada, ideal para cancha sintética y natural.</p>
+          <p class="spotlight__price" id="spot-price">Q.189</p>
+          <button class="btn btn--dark" type="button" id="spot-add">Agregar al carrito</button>
+        </div>
+        <p class="spotlight__hint" aria-hidden="true">Desliza para girarlo</p>
+      </div>
+    </section>
+
+    <section class="advice" aria-labelledby="advice-t">
+      <div>
+        <h2 id="advice-t">¿No sabes qué talla pedir?</h2>
+        <p>Escríbenos por WhatsApp con tu talla habitual y el deporte que practicas. Te responde una persona, no un robot.</p>
+      </div>
+      <a class="btn btn--light" href="https://wa.me/50254870255?text=Hola%2C%20necesito%20ayuda%20con%20una%20talla" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.3 20.8l4.3-1.1A8.8 8.8 0 1 0 12 3.2z"/><path d="M9 8.6c.2-.5.5-.6.8-.6h.5c.2 0 .4.1.5.4l.7 1.6c.1.3 0 .5-.1.7l-.5.6c-.1.2-.1.3 0 .5.6 1 1.4 1.8 2.5 2.4.2.1.3.1.5 0l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .9-.7 1.8-1.7 1.9-1 .1-2.5-.3-4.3-1.9-1.6-1.4-2.4-3-2.5-4-.1-.6.1-1.2.4-1.7z" class="fill"/></svg>
+        Escribir por WhatsApp
+      </a>
     </section>
   </main>
 
-  <footer class="footer" id="contacto">
-    <div class="footer__grid">
+  <footer class="footer">
+    <div class="footer__cols">
       <div>
-        <div class="footer__brand"><img src="assets/logo.svg" alt="" width="56" height="56"><span>TiendaDeportiva<b>LM</b></span></div>
-        <p class="footer__muted">Equipo deportivo para entrenar, competir y disfrutar.</p>
+        <h2>Comprar</h2>
+        <ul id="footer-cats"></ul>
       </div>
       <div>
-        <h3>Contacto</h3>
-        <p><a href="https://wa.me/50254870255" target="_blank" rel="noopener">WhatsApp: +502 5487 0255</a></p>
-        <!-- DIRECCIÓN: dato de ejemplo, reemplázalo -->
-        <p class="footer__muted">Ciudad de Guatemala</p>
+        <h2>Cómo comprar</h2>
+        <ol class="steps">
+          <li>Agrega tus productos al carrito.</li>
+          <li>Pulsa «Pedir por WhatsApp».</li>
+          <li>Te confirmamos existencias, entrega y pago.</li>
+        </ol>
       </div>
       <div>
-        <h3>Horario</h3>
-        <p class="footer__muted">Lunes a sábado, 9:00 – 19:00</p>
+        <h2>Contacto</h2>
+        <ul>
+          <li><a href="https://wa.me/50254870255" target="_blank" rel="noopener">WhatsApp +502 5487 0255</a></li>
+          <!-- DIRECCIÓN: dato pendiente de confirmar -->
+          <li>Ciudad de Guatemala</li>
+        </ul>
       </div>
     </div>
-    <p class="footer__copy">© <span id="year">2026</span> TiendaDeportivaLM. Todos los derechos reservados.</p>
+    <div class="footer__base">
+      <p>© <span id="year">2026</span> TiendaDeportivaLM. Precios en quetzales. Modelo 3D de zapatilla: «Materials Variants Shoe» de Shopify, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.</p>
+      <button class="admin-link" type="button" id="admin-open">Menú administrador</button>
+    </div>
   </footer>
 
   <!-- CARRITO -->
-  <div class="cart" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-t" hidden>
-    <div class="cart__backdrop" data-close></div>
-    <aside class="cart__panel">
-      <header class="cart__head">
-        <h2 id="cart-t">Tu carrito</h2>
-        <button class="icon-btn" data-close aria-label="Cerrar carrito">
+  <div class="drawer" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-t" hidden>
+    <div class="drawer__backdrop" data-close></div>
+    <aside class="drawer__panel">
+      <header class="drawer__head">
+        <h2 id="cart-t">Carrito</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Cerrar carrito">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
         </button>
       </header>
-      <div class="cart__items" id="cart-items"></div>
-      <footer class="cart__foot">
-        <div class="cart__total"><span>Total</span><strong id="cart-total">Q.0</strong></div>
-        <button class="btn btn--orange btn--block" id="cart-send">Pedir por WhatsApp</button>
-        <p class="cart__note">Te confirmamos disponibilidad y entrega por WhatsApp antes de cobrar.</p>
+      <div class="drawer__body" id="cart-items"></div>
+      <footer class="drawer__foot">
+        <div class="total"><span>Total</span><strong id="cart-total">Q.0</strong></div>
+        <button class="btn btn--dark btn--block" type="button" id="cart-send">Pedir por WhatsApp</button>
+        <p class="drawer__note">Se abre WhatsApp con tu pedido listo. Te confirmamos existencias y entrega antes de cobrar.</p>
       </footer>
     </aside>
+  </div>
+
+  <!-- MENÚ ADMINISTRADOR: PIN -->
+  <dialog class="modal" id="pin-dialog" aria-labelledby="pin-t">
+    <form method="dialog" class="modal__body" id="pin-form" novalidate>
+      <h2 id="pin-t">Menú administrador</h2>
+      <p id="pin-help">Escribe tu PIN para editar el inventario.</p>
+      <label for="pin">PIN</label>
+      <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="8">
+      <label for="pin2" id="pin2-label" hidden>Repite el PIN</label>
+      <input id="pin2" type="password" inputmode="numeric" autocomplete="off" maxlength="8" hidden>
+      <p class="form-error" id="pin-error" role="alert"></p>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" type="button" data-cancel>Cancelar</button>
+        <button class="btn btn--dark" type="submit" id="pin-submit">Entrar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- MENÚ ADMINISTRADOR: agregar producto -->
+  <dialog class="modal modal--wide" id="add-dialog" aria-labelledby="add-t">
+    <form method="dialog" class="modal__body form" id="add-form" novalidate>
+      <h2 id="add-t" class="full">Agregar producto</h2>
+      <label class="full">Nombre<input name="nombre" maxlength="80" placeholder="Ej.: Balón de voleibol"></label>
+      <label>Categoría<select name="categoria" id="add-cat"></select></label>
+      <label>Precio (Q.)<input name="precio" type="number" min="0" step="0.01" inputmode="decimal" placeholder="150"></label>
+      <label>Cantidad<input name="stock" type="number" min="0" step="1" inputmode="numeric" placeholder="10"></label>
+      <label class="full">Foto <span class="opt">(opcional)</span><input name="imagen" type="file" accept="image/*"></label>
+      <label class="full">Descripción <span class="opt">(opcional)</span><input name="descripcion" maxlength="140" placeholder="Una línea que ayude a decidir la compra"></label>
+      <p class="form-error full" id="add-error" role="alert"></p>
+      <div class="modal__actions full">
+        <button class="btn btn--ghost" type="button" data-cancel>Cancelar</button>
+        <button class="btn btn--dark" type="submit">Agregar al inventario</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Barra del modo administrador -->
+  <div class="admin-bar" id="admin-bar" hidden>
+    <p><strong>Modo administrador.</strong> <span>Los cambios se guardan en este dispositivo.</span></p>
+    <div class="admin-bar__actions">
+      <button class="btn btn--light btn--sm" type="button" id="admin-add">Agregar producto</button>
+      <button class="btn btn--outline-light btn--sm" type="button" id="admin-export">Descargar</button>
+      <button class="btn btn--outline-light btn--sm" type="button" id="admin-reset">Restablecer</button>
+      <button class="btn btn--outline-light btn--sm" type="button" id="admin-exit">Salir</button>
+    </div>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -143,10 +250,11 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-  <script src="js/config.js"></script>
   <script src="js/catalogo.js"></script>
   <script src="js/inventario.js"></script>
   <script src="js/tienda.js"></script>
+  <script src="js/admin.js"></script>
   <script src="js/escena.js" defer></script>
+  <script src="js/showroom.js" defer></script>
 </body>
 </html>

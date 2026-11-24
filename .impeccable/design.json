@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-23T23:00:00Z",
+  "title": "Design System: TiendaDeportivaLM",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "primary", "displayName": "Shop Ink", "canonical": "#111111", "tonalRamp": ["#0B0B0C", "#111111", "#262627", "#3A3A3A", "#666667", "#89898A", "#D1D1D2", "#EEEEF0"] },
+      "ink-raised": { "role": "primary", "displayName": "Raised Ink", "canonical": "#3A3A3A", "tonalRamp": ["#0B0B0C", "#262627", "#3A3A3A", "#454546", "#666667", "#89898A", "#D1D1D2", "#EEEEF0"] },
+      "red": { "role": "tertiary", "displayName": "Low-Stock Red", "canonical": "#D30005", "tonalRamp": ["#2A0000", "#5C0000", "#910000", "#D30005", "#EF3E38", "#FF7A6C", "#FFAB9D", "#FFD3C7"] },
+      "white": { "role": "neutral", "displayName": "Paper White", "canonical": "#FFFFFF", "tonalRamp": ["#0B0B0C", "#262627", "#454546", "#666667", "#89898A", "#AEAEAF", "#E5E5E5", "#FFFFFF"] },
+      "surface": { "role": "neutral", "displayName": "Tile Grey", "canonical": "#F5F5F5", "tonalRamp": ["#0B0B0C", "#262627", "#454546", "#666667", "#89898A", "#AEAEAF", "#E5E5E5", "#F5F5F5"] },
+      "line": { "role": "neutral", "displayName": "Hairline Grey", "canonical": "#E5E5E5", "tonalRamp": ["#0B0B0C", "#262627", "#454546", "#666667", "#89898A", "#AEAEAF", "#CACACB", "#E5E5E5"] },
+      "line-strong": { "role": "neutral", "displayName": "Control Grey", "canonical": "#CACACB", "tonalRamp": ["#0B0B0C", "#262627", "#454546", "#666667", "#89898A", "#B3B3B5", "#CACACB", "#E5E5E5"] },
+      "grey": { "role": "neutral", "displayName": "Nike Grey", "canonical": "#707072", "tonalRamp": ["#0B0B0C", "#262627", "#4B4B4D", "#707072", "#89898A", "#AEAEAF", "#D1D1D2", "#EEEEF0"] },
+      "grey-d": { "role": "neutral", "displayName": "Deep Grey", "canonical": "#4B4B4D", "tonalRamp": ["#0B0B0C", "#262627", "#4B4B4D", "#666667", "#89898A", "#AEAEAF", "#D1D1D2", "#EEEEF0"] },
+      "night-deep": { "role": "neutral", "displayName": "Night Deep", "canonical": "#0B0B0B", "tonalRamp": ["#0B0B0B", "#121212", "#1C1C1D", "#2C2C2E", "#454546", "#666667", "#89898A", "#AEAEAF"] },
+      "night-core": { "role": "neutral", "displayName": "Night Core", "canonical": "#121212", "tonalRamp": ["#0B0B0B", "#121212", "#1C1C1D", "#2C2C2E", "#454546", "#666667", "#89898A", "#AEAEAF"] },
+      "night-glow": { "role": "neutral", "displayName": "Night Glow", "canonical": "#2C2C2E", "tonalRamp": ["#0B0B0B", "#121212", "#1C1C1D", "#2C2C2E", "#454546", "#666667", "#89898A", "#AEAEAF"] },
+      "hero-ground": { "role": "neutral", "displayName": "Hero Ground", "canonical": "#1C1A17", "tonalRamp": ["#0E0D0B", "#1C1A17", "#2E2B27", "#46423C", "#625D56", "#8A847C", "#BDB8B1", "#EAE7E2"] },
+      "on-dark-muted": { "role": "neutral", "displayName": "On-Dark Muted", "canonical": "#C7C7C9", "tonalRamp": ["#262627", "#454546", "#666667", "#89898A", "#AEAEAF", "#C7C7C9", "#D1D1D2", "#EEEEF0"] },
+      "on-dark-faint": { "role": "neutral", "displayName": "On-Dark Faint", "canonical": "#B3B3B5", "tonalRamp": ["#262627", "#454546", "#666667", "#89898A", "#B3B3B5", "#C7C7C9", "#D1D1D2", "#EEEEF0"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline and showroom product name: Archivo 900, width 62%, uppercase, balanced wrap." },
+      "headline": { "displayName": "Headline", "purpose": "Uppercase compressed statements on campaign bands (editorial, spotlight, advice)." },
+      "title": { "displayName": "Title", "purpose": "Section heads, drawer and dialog titles, showroom and spotlight price." },
+      "product-name": { "displayName": "Product Name", "purpose": "Card product names and card prices (tabular numerals)." },
+      "body": { "displayName": "Body", "purpose": "Base page text, hero and band copy capped at 30-36rem." },
+      "body-sm": { "displayName": "Body Small", "purpose": "Category lines, chips, inputs, cart lines, footer." },
+      "label": { "displayName": "Label", "purpose": "Buttons, nav links, stock lines." },
+      "caption": { "displayName": "Caption", "purpose": "Utility bar, hints, cart note, footer base, small buttons." },
+      "wordmark": { "displayName": "Wordmark", "purpose": "TiendaDeportiva in ink, LM in Nike Grey; width 75%, weight 800." }
+    },
+    "shadows": [
+      { "name": "header-hairline", "value": "0 1px 0 #E5E5E5", "purpose": "Sticky header once scrolled past 40px." },
+      { "name": "drawer-edge", "value": "-24px 0 48px -24px rgba(0,0,0,.25)", "purpose": "Cart drawer panel edge." },
+      { "name": "dialog-lift", "value": "0 30px 80px -20px rgba(0,0,0,.35)", "purpose": "Admin dialogs." },
+      { "name": "floating-bar", "value": "0 18px 40px -12px rgba(0,0,0,.45)", "purpose": "Floating admin bar." },
+      { "name": "overlay-scrim", "value": "rgba(17,17,17,.45)", "purpose": "Backdrop behind drawer and dialogs." },
+      { "name": "photo-scrim-hero", "value": "linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,.28) 60%, rgba(0,0,0,.72) 100%)", "purpose": "Bottom-weighted scrim so white copy sits on the hero photo." },
+      { "name": "photo-scrim-editorial", "value": "linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.65) 100%)", "purpose": "Scrim on the editorial band photo." },
+      { "name": "showroom-radial", "value": "radial-gradient(60% 70% at 65% 50%, #2c2c2e 0%, #121212 55%, #0b0b0b 100%)", "purpose": "Off-centre glow behind the 3D shoe." }
+    ],
+    "motion": [
+      { "name": "ease", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Shared settle curve: header hide, tile image scale, toast drop." },
+      { "name": "control-transition", "value": "0.2s", "purpose": "Colour, border and background changes on buttons, chips, fields." },
+      { "name": "tile-zoom", "value": "transform .8s var(--ease); scale 1.035 (product) / 1.04 (category)", "purpose": "Image scale on card or tile hover." },
+      { "name": "header-hide", "value": "transform .4s var(--ease)", "purpose": "Sticky header slides away on scroll down past 400px." },
+      { "name": "hero-entrance", "value": "GSAP expo.out: image scale 1.08 to 1 over 2.2s, title y 40 over 1.2s, copy y 24 over 1s stagger .1", "purpose": "One-time hero entrance." },
+      { "name": "photo-parallax", "value": "ScrollTrigger scrub, hero yPercent 0 to 8, editorial -10 to 10", "purpose": "Scrubbed parallax on campaign photos." },
+      { "name": "grid-reveal", "value": "GSAP power3.out .5s, y 16, stagger .03", "purpose": "Catalogue cards fade up after filtering." },
+      { "name": "drawer-slide", "value": "in .5s expo.out, out .35s power3.in", "purpose": "Cart drawer." },
+      { "name": "toast-drop", "value": "translate .45s var(--ease)", "purpose": "Toast from top centre." },
+      { "name": "spotlight-pin", "value": "pin 1.2 x viewport height, scrub", "purpose": "3D football turns once with the scroll." },
+      { "name": "smooth-scroll", "value": "Lenis lerp .11", "purpose": "Smooth scrolling tied to the GSAP ticker." },
+      { "name": "reduced-motion", "value": "durations .001ms", "purpose": "All motion collapses under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "form-single", "value": "560px" },
+      { "name": "phone", "value": "760px" },
+      { "name": "showroom-stack", "value": "860px" },
+      { "name": "nav-collapse", "value": "960px" },
+      { "name": "grid-3", "value": "1100px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ink pill for add-to-cart, WhatsApp order and dialog submit on light grounds.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Agregar al carrito</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 48px; padding: .75rem 1.5rem; border-radius: 999px; border: 1.5px solid transparent; font-family: var(--sans, Archivo, Helvetica, Arial, sans-serif); font-weight: 500; font-size: 1rem; line-height: 1; cursor: pointer; white-space: nowrap; transition: background-color .2s, color .2s, border-color .2s; } .ds-btn-primary { background: var(--ink, #111111); color: var(--white, #FFFFFF); } .ds-btn-primary:hover { background: #3A3A3A; } .ds-btn-primary:focus-visible { outline: 2px solid var(--ink, #111111); outline-offset: 3px; } .ds-btn-primary:disabled { background: var(--line, #E5E5E5); color: #6E6E70; cursor: not-allowed; }"
+    },
+    {
+      "name": "Light Button on Dark Band",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "White pill used as the primary action on hero, editorial, showroom and advice bands, paired with the outline-light secondary.",
+      "html": "<div class=\"ds-band\"><button class=\"ds-btn-l\">Comprar ahora</button><button class=\"ds-btn-ol\">Pedir asesoría</button></div>",
+      "css": ".ds-band { display: flex; gap: .75rem; flex-wrap: wrap; padding: 2rem; background: #111111; } .ds-btn-l, .ds-btn-ol { min-height: 48px; padding: .75rem 1.5rem; border-radius: 999px; border: 1.5px solid transparent; font-family: var(--sans, Archivo, Helvetica, Arial, sans-serif); font-weight: 500; font-size: 1rem; line-height: 1; cursor: pointer; transition: background-color .2s, border-color .2s; } .ds-btn-l { background: var(--white, #FFFFFF); color: var(--ink, #111111); } .ds-btn-l:hover { background: var(--line, #E5E5E5); } .ds-btn-ol { background: transparent; border-color: rgba(255,255,255,.85); color: #FFFFFF; } .ds-btn-ol:hover { background: rgba(255,255,255,.14); } .ds-btn-l:focus-visible, .ds-btn-ol:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "White pill with Control Grey border; cancel actions and the desktop resting state of the card add button.",
+      "html": "<button class=\"ds-btn-ghost\">Cancelar</button>",
+      "css": ".ds-btn-ghost { min-height: 48px; padding: .75rem 1.5rem; border-radius: 999px; border: 1.5px solid #CACACB; background: var(--white, #FFFFFF); color: var(--ink, #111111); font-family: var(--sans, Archivo, Helvetica, Arial, sans-serif); font-weight: 500; font-size: 1rem; line-height: 1; cursor: pointer; transition: border-color .2s; } .ds-btn-ghost:hover { border-color: var(--ink, #111111); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--ink, #111111); outline-offset: 3px; }"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Category filter pills; selected state is solid ink.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">Todos</button><button class=\"ds-chip\" aria-pressed=\"false\">Running</button><button class=\"ds-chip\" aria-pressed=\"false\">Fútbol</button></div>",
+      "css": ".ds-chips { display: flex; gap: .5rem; } .ds-chip { min-height: 40px; padding: .5rem 1.1rem; border-radius: 999px; border: 1.5px solid #CACACB; background: var(--white, #FFFFFF); color: var(--ink, #111111); font-family: var(--sans, Archivo, Helvetica, Arial, sans-serif); font-size: 1rem; cursor: pointer; transition: border-color .2s, background-color .2s, color .2s; } .ds-chip:hover { border-color: var(--ink, #111111); } .ds-chip[aria-pressed=\"true\"] { background: var(--ink, #111111); border-color: var(--ink, #111111); color: #FFFFFF; } .ds-chip:focus-visible { outline: 2px solid var(--ink, #111111); outline-offset: 3px; }"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "Tile Grey pill search that turns white with an ink ring on focus.",
+      "html": "<label class=\"ds-search\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"m20 20-4.8-4.8\"/></svg><input type=\"search\" placeholder=\"Buscar\"></label>",
+      "css": ".ds-search { display: flex; align-items: center; gap: .5rem; height: 44px; padding: 0 1rem; border-radius: 999px; background: var(--surface, #F5F5F5); color: var(--ink, #111111); width: 18rem; transition: background-color .2s, box-shadow .2s; } .ds-search:focus-within { background: #FFFFFF; box-shadow: 0 0 0 1.5px var(--ink, #111111); } .ds-search svg { flex: none; } .ds-search input { border: 0; outline: 0; background: transparent; width: 100%; font-family: var(--sans, Archivo, Helvetica, Arial, sans-serif); font-size: 1rem; color: inherit; } .ds-search input::placeholder { color: var(--grey, #707072); }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "text-input",
+      "description": "48px dialog field, 10px radius, border shifts to ink on focus.",
+      "html": "<label class=\"ds-field\">Nombre<input placeholder=\"Ej.: Balón de voleibol\"></label>",
+      "css": ".ds-field { display: grid; gap: .35rem; font-family: var(--sans, Archivo, Helvetica, Arial, sans-serif); font-size: 1rem; font-weight: 500; color: var(--ink, #111111); max-width: 22rem; } .ds-field input { min-height: 48px; padding: .6rem .9rem; border: 1.5px solid #CACACB; border-radius: 10px; background: #FFFFFF; font: inherit; font-weight: 400; color: inherit; } .ds-field input:focus { outline: none; border-color: var(--ink, #111111); }"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "refersTo": "product-tile",
+      "description": "Square borderless media on Tile Grey, stock line, name, category, tabular price, full-width add button.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-media\"></div><div class=\"ds-card-body\"><p class=\"ds-card-stock\">Quedan 3</p><h3 class=\"ds-card-name\">Zapatillas Street Runner</h3><p class=\"ds-card-cat\">Running</p><p class=\"ds-card-price\">Q.499</p><button class=\"ds-card-add\">Agregar al carrito</button></div></article>",
+      "css": ".ds-card { display: flex; flex-direction: column; width: 260px; font-family: var(--sans, Archivo, Helvetica, Arial, sans-serif); color: var(--ink, #111111); } .ds-card-media { aspect-ratio: 1; background: var(--surface, #F5F5F5); transition: transform .8s cubic-bezier(.16,1,.3,1); } .ds-card-body { display: flex; flex-direction: column; gap: .15rem; padding-top: .85rem; } .ds-card-stock { margin: .15rem 0 0; font-size: 1rem; font-weight: 500; color: var(--red, #D30005); } .ds-card-name { margin: 0; font-size: 1.125rem; font-weight: 600; line-height: 1.3; } .ds-card-cat { margin: 0; font-size: 1rem; color: var(--grey, #707072); } .ds-card-price { margin: .45rem 0 0; font-size: 1.125rem; font-weight: 600; font-variant-numeric: tabular-nums; } .ds-card-add { margin-top: .9rem; min-height: 48px; border-radius: 999px; border: 1.5px solid #CACACB; background: #FFFFFF; color: var(--ink, #111111); font: 500 1rem/1 var(--sans, Archivo, Helvetica, Arial, sans-serif); cursor: pointer; transition: background-color .2s, color .2s, border-color .2s; } .ds-card:hover .ds-card-add, .ds-card-add:hover { background: var(--ink, #111111); border-color: var(--ink, #111111); color: #FFFFFF; } .ds-card-add:focus-visible { outline: 2px solid var(--ink, #111111); outline-offset: 3px; }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "icon-button",
+      "description": "Wordmark, centred category links with Tile Grey pill hover, circular icon buttons with ink cart badge.",
+      "html": "<header class=\"ds-nav\"><span class=\"ds-word\">TiendaDeportiva<b>LM</b></span><nav class=\"ds-links\"><a href=\"#\">Running</a><a href=\"#\">Fútbol</a><a href=\"#\">Gimnasio</a></nav><button class=\"ds-icon\" aria-label=\"Carrito\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M5 8h14l-1.2 12H6.2z\"/><path d=\"M9 8V6.5a3 3 0 0 1 6 0V8\"/></svg><span class=\"ds-badge\">2</span></button></header>",
+      "css": ".ds-nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1.5rem; height: 64px; padding: 0 1.5rem; background: #FFFFFF; color: var(--ink, #111111); font-family: var(--sans, Archivo, Helvetica, Arial, sans-serif); box-shadow: 0 1px 0 #E5E5E5; } .ds-word { font-weight: 800; font-size: 1.15rem; letter-spacing: -.01em; font-stretch: 75%; } .ds-word b { font-weight: 800; color: var(--grey, #707072); } .ds-links { display: flex; gap: .25rem; } .ds-links a { padding: .6rem .8rem; font-weight: 500; font-size: 1rem; text-decoration: none; color: inherit; border-radius: 999px; } .ds-links a:hover { background: var(--surface, #F5F5F5); } .ds-links a:focus-visible, .ds-icon:focus-visible { outline: 2px solid var(--ink, #111111); outline-offset: 3px; } .ds-icon { justify-self: end; position: relative; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 0; background: transparent; color: inherit; cursor: pointer; transition: background-color .2s; } .ds-icon:hover { background: var(--line, #E5E5E5); } .ds-badge { position: absolute; top: 7px; right: 5px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--ink, #111111); color: #FFFFFF; font-size: .7rem; font-weight: 600; display: grid; place-items: center; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Showroom Colour Swatches",
+      "kind": "custom",
+      "refersTo": "night-core",
+      "description": "48px circular colour radios on the near-black showroom radial; checked shows a white outline ring.",
+      "html": "<fieldset class=\"ds-sw\"><legend>Color: <span>Negro</span></legend><label><input type=\"radio\" name=\"ds-c\" checked><span style=\"--c:#222224\"></span></label><label><input type=\"radio\" name=\"ds-c\"><span style=\"--c:#2a90c8\"></span></label><label><input type=\"radio\" name=\"ds-c\"><span style=\"--c:#dcb3b8\"></span></label></fieldset>",
+      "css": ".ds-sw { border: 0; margin: 0; padding: 1.5rem; display: flex; gap: .7rem; flex-wrap: wrap; background: radial-gradient(60% 70% at 65% 50%, #2c2c2e 0%, #121212 55%, #0b0b0b 100%); font-family: var(--sans, Archivo, Helvetica, Arial, sans-serif); } .ds-sw legend { float: left; width: 100%; margin-bottom: .7rem; font-size: 1rem; color: #C7C7C9; } .ds-sw legend span { color: #FFFFFF; font-weight: 600; } .ds-sw label { position: relative; cursor: pointer; } .ds-sw input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; } .ds-sw label span { display: block; width: 48px; height: 48px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); outline: 2px solid transparent; outline-offset: 3px; transition: outline-color .2s; } .ds-sw input:checked + span { outline-color: #FFFFFF; } .ds-sw input:focus-visible + span { outline-color: #FFFFFF; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), 0 0 0 7px rgba(255,255,255,.25); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night-City Shop Floor",
+    "overview": "A premium sportswear storefront played straight. The page is white and grey ground, near-black ink, and full-bleed night-city running photography; the product image and its price do the persuading, and the interface stays out of their way. Every surface is either a quiet commerce ground (white, #F5F5F5 tiles) or a dark campaign band (photo under a bottom-weighted scrim, the near-black radial showroom, the solid ink advice band). The page alternates between the two, and that alternation is the rhythm of the whole site.\n\nType is one variable family, Archivo, doing two jobs: compressed, black-weight uppercase for the few campaign statements, and regular-width medium/semibold for every piece of shopping UI. Shapes are binary: product media is square-cornered and borderless, everything you press is a full pill. Colour is almost absent; the single chromatic value in the interface is a functional red that only ever means \"few left\".\n\nMotion is quiet and settles rather than bounces: one long expo-out entrance on the hero, scrubbed parallax on campaign photos, a slow image scale on tile hover, a pinned spotlight whose 3D ball turns once with the scroll, and a drag-to-spin 3D shoe in the showroom. All of it collapses under `prefers-reduced-motion`.",
+    "keyCharacteristics": [
+      "Monochrome commerce UI (white, #F5F5F5, #111111, two greys); colour comes from photography and 3D product only.",
+      "One family, Archivo variable: width 62% + weight 900 + uppercase for display; normal width for UI.",
+      "Square, borderless, grey-grounded product media; pill-shaped controls everywhere else.",
+      "Alternating light commerce sections and dark full-bleed campaign bands.",
+      "Red #D30005 is reserved for low stock.",
+      "Tabular numerals on every price, count and quantity."
+    ],
+    "rules": [
+      { "name": "The Red Means Scarcity Rule", "body": "Red #D30005 appears only on the low-stock line. Errors, sale states and emphasis use ink weight, never red; the form error message is ink 600.", "section": "colors" },
+      { "name": "The Photography Carries Colour Rule", "body": "UI chrome stays monochrome. A new surface gets its colour from a product image, a campaign photo or a 3D render, not from a tinted background or accent.", "section": "colors" },
+      { "name": "The Two Widths Rule", "body": "Compressed width (62%) belongs only to uppercase 900-weight campaign statements on bands or the hero. Shopping UI (names, prices, buttons, forms) is always regular width, sentence case.", "section": "typography" },
+      { "name": "The Tabular Price Rule", "body": "Every price, count, total and quantity sets `font-variant-numeric: tabular-nums`. Prices are written \"Q.499\".", "section": "typography" },
+      { "name": "The Flat Shelf Rule", "body": "Product and category tiles never take a shadow or border. Only overlays (drawer, dialog, admin bar) are lifted.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** keep commerce UI monochrome: white, Tile Grey (#F5F5F5), Shop Ink (#111111), and the two greys for secondary text.",
+      "**Do** reserve Low-Stock Red (#D30005) for the \"Quedan N\" line.",
+      "**Do** set campaign statements in Archivo 900, width 62%, uppercase, line-height 0.86–0.95, and only on the hero or a dark/full-bleed band.",
+      "**Do** make every pressable control a pill or circle with at least 44px (icon) or 48px (button) height.",
+      "**Do** show product media square-cornered on Tile Grey with no border or shadow.",
+      "**Do** use tabular numerals for prices, counts and quantities, formatted \"Q.499\".",
+      "**Do** put white copy on photography only over a bottom-weighted black scrim.",
+      "**Do** use the shared ease `cubic-bezier(.16, 1, .3, 1)` (or GSAP expo-out/power3-out) for settles; keep motion off under `prefers-reduced-motion`."
+    ],
+    "donts": [
+      "**Don't** introduce a second accent colour, tinted section backgrounds, or neon/brand colours in UI chrome.",
+      "**Don't** use red for errors, sales or emphasis.",
+      "**Don't** set prices, product names, buttons or form text in the compressed width or in uppercase.",
+      "**Don't** add borders or shadows to product or category tiles.",
+      "**Don't** round product media or use square-cornered buttons.",
+      "**Don't** use bouncy or overshooting easing.",
+      "**Don't** show other companies' logos in photography."
+    ]
+  }
+}

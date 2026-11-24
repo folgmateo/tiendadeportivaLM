@@ -10,5 +10,6 @@ window.CATALOGO_BASE = [
   { id: "p5", nombre: "Mancuernas hexagonales 10 lb (par)", categoria: "Gimnasio", precio: 399, stock: 6, imagen: "assets/img/mancuernas.webp", descripcion: "Recubrimiento de caucho y mango cromado antideslizante." },
   { id: "p6", nombre: "Esterilla de yoga 6 mm", categoria: "Gimnasio", precio: 179, stock: 14, imagen: "assets/img/esterilla.webp", descripcion: "Antideslizante por ambas caras, incluye correa." },
   { id: "p7", nombre: "Mochila deportiva 30 L", categoria: "Accesorios", precio: 299, stock: 3, imagen: "assets/img/mochila.webp", descripcion: "Compartimento para zapatillas y bolsillo térmico." },
+  { id: "p9", nombre: "Zapatillas urbanas Street Runner", categoria: "Running", precio: 499, stock: 10, imagen: "assets/img/street-runner.webp", descripcion: "Para correr en la ciudad y usar todo el día. Tres colores: negro, azul y rosa." },
   { id: "p8", nombre: "Botella térmica 750 ml", categoria: "Accesorios", precio: 129, stock: 30, imagen: "assets/img/botella.webp", descripcion: "Acero inoxidable: frío 24 h, caliente 12 h." }
 ];

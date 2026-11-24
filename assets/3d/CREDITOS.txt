@@ -1,0 +1,5 @@
+Modelo 3D de la zapatilla: "Materials Variants Shoe"
+Autor: Shopify, publicado en Khronos glTF Sample Assets
+https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/MaterialsVariantsShoe
+Licencia: Creative Commons Attribution 4.0 (CC BY 4.0) https://creativecommons.org/licenses/by/4.0/
+Cambios: texturas reducidas a 1024 px, emblema del talón retirado y modelo incrustado en js/zapatilla-modelo.js.

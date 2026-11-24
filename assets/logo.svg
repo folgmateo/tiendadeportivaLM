@@ -1,11 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="t">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="t">
   <title id="t">TiendaDeportivaLM</title>
-  <!-- Logo original: pista de atletismo (tres carriles en curva) + monograma LM -->
-  <rect width="120" height="120" rx="28" fill="#0F3B2E"/>
-  <g fill="none" stroke-linecap="round">
-    <path d="M18 96 C 18 52, 52 22, 100 22" stroke="#FF6A1A" stroke-width="7"/>
-    <path d="M32 98 C 32 62, 60 36, 100 36" stroke="#F5F5F0" stroke-width="3" opacity=".55"/>
-    <path d="M46 100 C 46 72, 68 50, 100 50" stroke="#F5F5F0" stroke-width="3" opacity=".3"/>
-  </g>
-  <text x="98" y="100" text-anchor="end" font-family="'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif" font-weight="900" font-size="40" fill="#F5F5F0">LM</text>
+  <rect width="40" height="40" rx="9" fill="#111111"/>
+  <path d="M8 31 C8 19 17 10 32 10" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M16 32 C16 24 22 18 32 18" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" opacity=".5"/>
 </svg>

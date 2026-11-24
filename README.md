@@ -1,14 +1,12 @@
 # TiendaDeportivaLM
 
-Sitio estático para GitHub Pages con dos partes:
+Tienda deportiva estática para GitHub Pages (HTML, CSS y JS, librerías por CDN; funciona también abriendo `index.html` con doble clic).
 
-- **Tienda** (`/`): catálogo con filtros, búsqueda, carrito y pedido por WhatsApp (+502 5487 0255). Hero 3D procedural (Three.js) con giro de 360° y explosión al hacer scroll.
-- **Panel del dueño** (ruta oculta en `js/config.js`, se abre tocando 5 veces el logo del pie de página; protegido con PIN): agregar productos (con foto), sumar/restar unidades, cambiar precio y eliminar.
+- **Tienda:** catálogo con compra por deporte, filtros, búsqueda, orden por precio, carrito y pedido por WhatsApp (+502 5487 0255). Escaparate 3D (Three.js) donde el balón gira 360° con el scroll.
+- **Menú administrador:** botón al final de la página. Pide un PIN (se crea la primera vez en cada dispositivo) y pone la misma tienda en modo dueño: sumar/restar existencias, cambiar cantidad o precio, eliminar y agregar productos con foto.
 
-## Cómo se guardan los datos
-El inventario vive en Google Sheets mediante el script `apps-script/Codigo.gs` (pegado en la hoja con Extensiones > Apps Script e implementado como aplicación web).
-Pon la URL `/exec` en `SHEETS_URL` dentro de `js/config.js`: la tienda revisa la hoja cada 20 s y el panel guarda directo en ella (validando el PIN en el script).
-Sin URL, todo funciona en modo local (solo en el navegador) y el panel permite descargar `catalogo.js` para publicar.
+## Dónde se guardan los cambios del administrador
+En el navegador del dispositivo donde se hacen (localStorage). Para que **todos** los clientes vean el inventario nuevo: en el modo administrador pulsa **Descargar catálogo** y sube el `catalogo.js` descargado a la carpeta `js/` del repositorio.
 
 ## Imágenes
 Las fotos de `assets/img/` están generadas con IA: reemplázalas por fotos reales de tus productos cuando las tengas.
