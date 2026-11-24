@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TiendaDeportivaLM · Equipo deportivo en Guatemala</title>
+  <meta name="description" content="Zapatillas, balones, ropa y equipo de gimnasio. Pide por WhatsApp y recibe en toda Guatemala.">
+  <meta name="theme-color" content="#0F3B2E">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Big+Shoulders+Display:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.css">
+  <link rel="stylesheet" href="css/tienda.css">
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#productos">Saltar a los productos</a>
+
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#inicio" aria-label="TiendaDeportivaLM, inicio">
+      <img src="assets/logo.svg" alt="" width="40" height="40">
+      <span>TiendaDeportiva<b>LM</b></span>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#productos">Productos</a>
+      <a href="#envios">Envíos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <button class="cart-btn" id="cart-open" aria-haspopup="dialog" aria-controls="cart">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20.5" r="1.3"/><circle cx="17" cy="20.5" r="1.3"/></svg>
+      <span>Carrito</span>
+      <span class="cart-btn__count" id="cart-count" aria-label="productos en el carrito">0</span>
+    </button>
+  </header>
+
+  <main>
+    <!-- HERO 3D: balón que explota en paneles con un giro de 360° (js/escena.js) -->
+    <section class="hero" id="inicio">
+      <canvas class="hero__canvas" id="escena" aria-hidden="true"></canvas>
+      <div class="hero__content">
+        <p class="hero__tag">Nuevo en Guatemala</p>
+        <h1 class="hero__title"><span class="line">Equípate</span><span class="line">para ganar</span></h1>
+        <p class="hero__lede">Zapatillas, balones, ropa y equipo de gimnasio con precios en quetzales. Pides por WhatsApp y te lo llevamos.</p>
+        <div class="hero__cta">
+          <a href="#productos" class="btn btn--orange magnetic">Ver productos</a>
+          <a href="https://wa.me/50254870255" class="btn btn--ghost magnetic" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        </div>
+      </div>
+      <div class="hero__hint" aria-hidden="true">Desliza para ver la jugada</div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span>Running</span><span>Fútbol</span><span>Baloncesto</span><span>Gimnasio</span><span>Accesorios</span>
+        <span>Running</span><span>Fútbol</span><span>Baloncesto</span><span>Gimnasio</span><span>Accesorios</span>
+      </div>
+    </div>
+
+    <!-- PRODUCTOS -->
+    <section class="section products" id="productos" aria-labelledby="productos-t">
+      <div class="products__head">
+        <h2 id="productos-t" class="reveal-title">Productos</h2>
+        <label class="search">
+          <span class="sr-only">Buscar productos</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="buscar" placeholder="Buscar: balón, zapatillas…" autocomplete="off">
+        </label>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar por categoría" id="filtros"></div>
+      <p class="products__empty" id="vacio" hidden>No hay productos que coincidan. Prueba con otra palabra o categoría.</p>
+      <div class="grid" id="grid" aria-live="polite"></div>
+    </section>
+
+    <!-- BANNER (foto generada con IA: reemplázala en assets/img/banner.webp) -->
+    <section class="banner" id="envios" aria-labelledby="envios-t">
+      <div class="banner__img"><img src="assets/img/banner.webp" alt="Corredor entrenando en una pista al amanecer" loading="lazy" width="1600" height="900"></div>
+      <div class="banner__content">
+        <h2 id="envios-t" class="reveal-title">Envíos a toda Guatemala</h2>
+        <p class="reveal">En la capital entregamos en 24 horas. En los departamentos, de 2 a 4 días hábiles. Pagas contra entrega o por transferencia.</p>
+      </div>
+    </section>
+
+    <section class="section perks" aria-label="Ventajas de comprar con nosotros">
+      <article class="perk reveal">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 14h24v18H6zM30 20h7l5 6v6H30z"/><circle cx="13" cy="36" r="4"/><circle cx="36" cy="36" r="4"/></svg>
+        <h3>Entrega rápida</h3><p>24 horas en la Ciudad de Guatemala.</p>
+      </article>
+      <article class="perk reveal">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 24a16 16 0 1 0 5-11.6"/><path d="M8 8v8h8"/></svg>
+        <h3>Cambios fáciles</h3><p>Si la talla no te queda, la cambias en 15 días.</p>
+      </article>
+      <article class="perk reveal">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 8h28a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H22l-10 8v-8h-2a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4z"/></svg>
+        <h3>Atención por WhatsApp</h3><p>Te asesoramos con tallas y modelos.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer" id="contacto">
+    <div class="footer__grid">
+      <div>
+        <a class="footer__brand" href="#inicio"><img src="assets/logo.svg" alt="" width="56" height="56"><span>TiendaDeportiva<b>LM</b></span></a>
+        <p class="footer__muted">Equipo deportivo para entrenar, competir y disfrutar.</p>
+      </div>
+      <div>
+        <h3>Contacto</h3>
+        <p><a href="https://wa.me/50254870255" target="_blank" rel="noopener">WhatsApp: +502 5487 0255</a></p>
+        <!-- DIRECCIÓN: dato de ejemplo, reemplázalo -->
+        <p class="footer__muted">Ciudad de Guatemala</p>
+      </div>
+      <div>
+        <h3>Horario</h3>
+        <p class="footer__muted">Lunes a sábado, 9:00 – 19:00</p>
+      </div>
+    </div>
+    <p class="footer__copy">© <span id="year">2026</span> TiendaDeportivaLM. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- CARRITO -->
+  <div class="cart" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-t" hidden>
+    <div class="cart__backdrop" data-close></div>
+    <aside class="cart__panel">
+      <header class="cart__head">
+        <h2 id="cart-t">Tu carrito</h2>
+        <button class="icon-btn" data-close aria-label="Cerrar carrito">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </header>
+      <div class="cart__items" id="cart-items"></div>
+      <footer class="cart__foot">
+        <div class="cart__total"><span>Total</span><strong id="cart-total">Q.0</strong></div>
+        <button class="btn btn--orange btn--block" id="cart-send">Pedir por WhatsApp</button>
+        <p class="cart__note">Te confirmamos disponibilidad y entrega por WhatsApp antes de cobrar.</p>
+      </footer>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+  <script src="js/catalogo.js"></script>
+  <script src="js/inventario.js"></script>
+  <script src="js/tienda.js"></script>
+  <script src="js/escena.js" defer></script>
+</body>
+</html>
