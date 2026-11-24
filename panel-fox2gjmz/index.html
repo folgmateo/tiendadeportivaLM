@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel · TiendaDeportivaLM</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Big+Shoulders+Display:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/host.css">
+</head>
+<body>
+  <!-- PUERTA: nada del panel se muestra hasta validar el PIN -->
+  <main class="gate" id="gate">
+    <form class="gate__card" id="gate-form" novalidate>
+      <img src="../assets/logo.svg" alt="" width="64" height="64">
+      <h1>Panel del dueño</h1>
+      <label for="pin">PIN</label>
+      <input id="pin" type="password" inputmode="numeric" autocomplete="current-password" required minlength="4">
+      <p class="form__error" id="gate-error" role="alert"></p>
+      <button class="btn btn--orange" type="submit">Entrar</button>
+    </form>
+  </main>
+
+  <div id="app" hidden>
+    <header class="top">
+      <div class="top__brand"><img src="../assets/logo.svg" alt="" width="44" height="44"><h1>Inventario</h1></div>
+      <div class="row">
+        <span class="sync" id="sync" role="status"></span>
+        <a class="btn btn--line" href="../index.html" target="_blank" rel="noopener">Ver la tienda</a>
+        <button class="btn btn--line" id="salir" type="button">Salir</button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="summary" aria-label="Resumen">
+        <div><span id="s-productos">0</span><p>productos</p></div>
+        <div><span id="s-unidades">0</span><p>unidades en total</p></div>
+        <div class="summary__warn"><span id="s-bajo">0</span><p>con 5 o menos</p></div>
+      </section>
+
+      <section class="panel" aria-labelledby="list-t">
+        <div class="panel__head">
+          <h2 id="list-t">Productos</h2>
+          <input id="filtro" type="search" placeholder="Buscar producto" aria-label="Buscar producto">
+        </div>
+        <p class="hint">Usa <b>−</b> cuando vendas una unidad y <b>+</b> cuando te llegue mercadería. Se guarda solo.</p>
+        <ul class="list" id="lista"></ul>
+      </section>
+
+      <section class="panel" aria-labelledby="add-t">
+        <h2 id="add-t">Agregar producto</h2>
+        <form id="form" class="form" novalidate>
+          <label>Nombre<input name="nombre" required maxlength="80" placeholder="Ej.: Balón de voleibol"></label>
+          <label>Categoría<select name="categoria" id="f-cat"></select></label>
+          <label>Precio (Q.)<input name="precio" type="number" min="0" step="0.01" inputmode="decimal" required placeholder="150"></label>
+          <label>Cantidad<input name="stock" type="number" min="0" step="1" inputmode="numeric" required placeholder="10"></label>
+          <label class="full"><span>Descripción <span class="opt">(opcional)</span></span><input name="descripcion" maxlength="140" placeholder="Una línea que ayude a decidir la compra"></label>
+          <label class="full"><span>Foto <span class="opt">(opcional)</span></span><input name="imagen" type="file" accept="image/*"></label>
+          <p class="form__error full" id="f-error" role="alert"></p>
+          <button class="btn btn--orange full" type="submit">Agregar al inventario</button>
+        </form>
+      </section>
+
+      <section class="panel panel--muted" id="local-tools" aria-labelledby="pub-t" hidden>
+        <h2 id="pub-t">Modo local</h2>
+        <p>La hoja de Google todavía no está conectada: los cambios solo se guardan en este navegador. Para publicarlos, descarga el catálogo y súbelo a GitHub reemplazando <code>js/catalogo.js</code>.</p>
+        <div class="row">
+          <button class="btn btn--dark" id="exportar" type="button">Descargar catálogo para publicar</button>
+          <button class="btn btn--line" id="restaurar" type="button">Volver al catálogo publicado</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/catalogo.js"></script>
+  <script src="../js/inventario.js"></script>
+  <script src="../js/host.js"></script>
+</body>
+</html>

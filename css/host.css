@@ -73,3 +73,20 @@ input[type="file"] { padding: .7rem; }
 .toast { position: fixed; left: 50%; bottom: 1.25rem; translate: -50% 160%; background: var(--ink); color: #fff; padding: .9rem 1.3rem; border-radius: 12px; font-weight: 600; transition: translate .35s; max-width: calc(100% - 2rem); text-align: center; }
 .toast.is-on { translate: -50% 0; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---------- puerta con PIN ---------- */
+.gate { min-height: 100vh; display: grid; place-items: center; padding: 1.5rem; background: var(--turf); }
+.gate[hidden], #app[hidden] { display: none; }
+.gate__card { width: min(100%, 22rem); background: #fff; border-radius: 20px; padding: 2rem; display: grid; gap: .8rem; justify-items: start; }
+.gate__card h1 { font-size: 2rem; margin: .4rem 0 .6rem; }
+.gate__card label { font-weight: 700; }
+.gate__card input, .gate__card .btn { width: 100%; }
+.gate__card input { font-size: 1.4rem; letter-spacing: .3em; }
+
+/* ---------- estado de sincronización ---------- */
+.top .row { align-items: center; }
+.sync { font-weight: 600; font-size: 1rem; padding: .35rem .8rem; border-radius: 999px; background: rgba(245,245,240,.14); }
+.sync::before { content: "● "; color: #4ADE80; }
+.sync.is-warn::before { color: var(--orange); }
+.sync:empty { display: none; }
+@media (max-width: 640px) { .top { flex-wrap: wrap; } .sync { order: 3; } }

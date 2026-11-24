@@ -212,13 +212,41 @@
     tAviso = setTimeout(() => t.classList.remove("is-on"), 2600);
   }
 
-  /* ================= cambios desde el panel /host/ (otra pestaña) ================= */
-  window.addEventListener("storage", (e) => {
-    if (e.key !== window.Inventario.KEY && e.key !== null) return;
-    productos = window.Inventario.cargar();
+  /* ================= inventario siempre al día ================= */
+  let primeraCarga = true;
+  function recargarInventario() {
+    const nuevo = window.Inventario.cargar();
+    if (JSON.stringify(nuevo) === JSON.stringify(productos)) return;
+    productos = nuevo;
     pintarFiltros(); pintarProductos(); pintarCarrito();
-    avisar("Inventario actualizado");
-  });
+    if (!primeraCarga) avisar("Inventario actualizado");
+  }
+  // misma pestaña (sincronización con la hoja) y otras pestañas (panel del dueño)
+  window.addEventListener("inventario:cambio", recargarInventario);
+  window.addEventListener("storage", (e) => { if (e.key === window.Inventario.KEY || e.key === null) recargarInventario(); });
+
+  // Google Sheets: al abrir, cada pocos segundos y al volver a la pestaña
+  if (window.Inventario.remoto) {
+    const sync = () => window.Inventario.sincronizar().catch(() => { /* sin conexión: se mantiene la última copia */ }).finally(() => { primeraCarga = false; });
+    sync();
+    setInterval(() => { if (!document.hidden) sync(); }, window.Inventario.refrescoMs);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) sync(); });
+  } else {
+    primeraCarga = false;
+  }
+
+  /* ================= acceso oculto del dueño: 5 toques seguidos al logo del pie ================= */
+  {
+    let toques = 0, tToques;
+    const ir = () => { location.href = (window.TDLM_CONFIG || {}).PANEL || "panel-fox2gjmz/"; };
+    document.querySelector(".footer__brand").addEventListener("click", (e) => {
+      e.preventDefault();
+      toques += 1;
+      clearTimeout(tToques);
+      tToques = setTimeout(() => { toques = 0; }, 1500);
+      if (toques >= 5) { toques = 0; ir(); }
+    });
+  }
 
   /* ================= tilt 3D de tarjetas ================= */
   function activarTilt() {
